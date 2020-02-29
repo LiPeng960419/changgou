@@ -1,9 +1,9 @@
 package com.changgou.fescar.interceptor;
 
-import com.alibaba.fescar.core.context.RootContext;
 import com.changgou.fescar.config.FescarAutoConfiguration;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
+import io.seata.core.context.RootContext;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.client.ClientHttpRequestExecution;

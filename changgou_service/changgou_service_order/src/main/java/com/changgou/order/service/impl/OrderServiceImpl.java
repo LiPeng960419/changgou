@@ -1,7 +1,6 @@
 package com.changgou.order.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fescar.spring.annotation.GlobalTransactional;
 import com.changgou.goods.feign.SkuFeign;
 import com.changgou.order.config.RabbitMQConfig;
 import com.changgou.order.dao.*;
@@ -12,6 +11,7 @@ import com.changgou.pay.feign.PayFeign;
 import com.changgou.util.IdWorker;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
