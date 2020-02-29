@@ -33,7 +33,7 @@ public class FescarAutoConfiguration {
      * @param environment
      * @return
      */
-    @Bean
+    //@Bean
     public DataSource dataSource(Environment environment){
         DruidDataSource dataSource = new DruidDataSource();
         dataSource.setUrl(environment.getProperty("spring.datasource.url"));
@@ -53,7 +53,7 @@ public class FescarAutoConfiguration {
      * @param environment
      * @return
      */
-    @Bean
+    //@Bean
     public GlobalTransactionScanner globalTransactionScanner(Environment environment){
         String applicationName = environment.getProperty("spring.application.name");
         String groupName = environment.getProperty("fescar.group.name");

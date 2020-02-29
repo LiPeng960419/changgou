@@ -1,0 +1,3 @@
+nohup sh seata-server.sh -p 8091 > catalina.out 2>&1 &
+
+seate1.1.0
