@@ -15,7 +15,7 @@ public class AdListener {
 
         //发起远程调用
         OkHttpClient okHttpClient = new OkHttpClient();
-        String url = "http://192.168.200.128/ad_update?position="+message;
+        String url = "http://39.97.99.155/ad_update?position="+message;
         Request request = new Request.Builder().url(url).build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
