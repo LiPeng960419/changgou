@@ -48,12 +48,12 @@ public class SearchServiceImpl implements SearchService {
             NativeSearchQueryBuilder nativeSearchQueryBuilder = new NativeSearchQueryBuilder();
             BoolQueryBuilder boolQuery = QueryBuilders.boolQuery();
 
-            //按照关键字查询
+            //按照关键字查询 matchQuery模糊查询
             if (StringUtils.isNotEmpty(searchMap.get("keywords"))){
                 boolQuery.must(QueryBuilders.matchQuery("name",searchMap.get("keywords")).operator(Operator.AND));
             }
 
-            //按照品牌进行过滤查询
+            //按照品牌进行过滤查询 termQuery精确查询
             if (StringUtils.isNotEmpty(searchMap.get("brand"))){
                 boolQuery.filter(QueryBuilders.termQuery("brandName",searchMap.get("brand")));
             }
