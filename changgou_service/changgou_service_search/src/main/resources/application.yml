@@ -4,15 +4,20 @@ spring:
   application:
     name: search
   rabbitmq:
-    host: 192.168.200.128
+    host: 39.97.99.155
   redis:
-    host: 192.168.200.128
+    host: 39.97.99.155
+  jpa:
+    properties:
+      hibernate:
+        jbdc:
+          batch_size: 150
   main:
     allow-bean-definition-overriding: true #当遇到同样名字的时候，是否允许覆盖注册
   data:
     elasticsearch:
-      cluster-name: elasticsearch
-      cluster-nodes: 192.168.200.128:9300
+      cluster-name: elk-es
+      cluster-nodes: 39.97.99.155:9300
   thymeleaf:
     cache: false
 eureka:
