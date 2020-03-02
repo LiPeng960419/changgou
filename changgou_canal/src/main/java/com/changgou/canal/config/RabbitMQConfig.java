@@ -19,7 +19,7 @@ public class RabbitMQConfig {
     public static final String PAGE_CREATE_QUEUE="page_create_queue";
 
     //声明队列
-    @Bean
+    @Bean(AD_UPDATE_QUEUE)
     public Queue queue(){
         return new Queue(AD_UPDATE_QUEUE);
     }

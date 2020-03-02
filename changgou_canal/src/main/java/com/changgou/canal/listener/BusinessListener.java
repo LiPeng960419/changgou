@@ -22,10 +22,10 @@ public class BusinessListener {
     public void adUpdate(CanalEntry.EventType eventType,CanalEntry.RowData rowData){
         System.out.println("广告表数据发生改变");
         //获取改变之前的数据
-        //rowData.getBeforeColumnsList().forEach((c)-> System.out.println("改变前的数据:"+c.getName()+"::"+c.getValue()));
+        rowData.getBeforeColumnsList().forEach((c)-> System.out.println("改变前的数据:"+c.getName()+"::"+c.getValue()));
 
         //获取改变之后的数据
-        //rowData.getAfterColumnsList().forEach((c)-> System.out.println("改变之后的数据:"+c.getName()+"::"+c.getValue()));
+        rowData.getAfterColumnsList().forEach((c)-> System.out.println("改变之后的数据:"+c.getName()+"::"+c.getValue()));
 
         for (CanalEntry.Column column : rowData.getAfterColumnsList()) {
             if ("position".equals(column.getName())){

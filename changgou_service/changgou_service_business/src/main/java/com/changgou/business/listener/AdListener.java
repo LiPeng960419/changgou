@@ -10,12 +10,12 @@ import java.io.IOException;
 public class AdListener {
 
     @RabbitListener(queues = "ad_update_queue")
-    public void receiveMessage(String message){
-        System.out.println("接收到的消息为:"+message);
+    public void receiveMessage(String message) {
+        System.out.println("接收到的消息为:" + message);
 
         //发起远程调用
         OkHttpClient okHttpClient = new OkHttpClient();
-        String url = "http://39.97.99.155/ad_update?position="+message;
+        String url = "http://39.97.99.155/ad_update?position=" + message;
         Request request = new Request.Builder().url(url).build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
@@ -28,7 +28,7 @@ public class AdListener {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 //请求成功
-                System.out.println("请求成功:"+response.message());
+                System.out.println("请求成功:" + response.message());
             }
         });
     }
