@@ -24,29 +24,29 @@ public class AddPointListener {
     private RabbitTemplate rabbitTemplate;
 
     @RabbitListener(queues = RabbitMQConfig.CG_BUYING_ADDPOINT)
-    public void receiveAddPointMessage(String message){
+    public void receiveAddPointMessage(String message) {
         System.out.println("用户服务接收到了任务消息");
 
         //转换消息
         Task task = JSON.parseObject(message, Task.class);
-        if (task == null || StringUtils.isEmpty(task.getRequestBody())){
+        if (task == null || StringUtils.isEmpty(task.getRequestBody())) {
             return;
         }
 
         //判断redis中当前的任务是否存在
         Object value = redisTemplate.boundValueOps(task.getId()).get();
-        if (value != null){
+        if (value != null) {
             return;
         }
 
         //更新用户积分
         int result = userService.updateUserPoint(task);
-        if (result == 0){
+        if (result == 0) {
             return;
         }
 
         //向订单服务返回通知消息
-        rabbitTemplate.convertAndSend(RabbitMQConfig.EX_BUYING_ADDPOINTUSER,RabbitMQConfig.CG_BUYING_FINISHADDPOINT_KEY,JSON.toJSONString(task));
+        rabbitTemplate.convertAndSend(RabbitMQConfig.EX_BUYING_ADDPOINTUSER, RabbitMQConfig.CG_BUYING_FINISHADDPOINT_KEY, JSON.toJSONString(task));
         System.out.println("用户服务向完成添加积分队列发送了一条消息");
     }
 }

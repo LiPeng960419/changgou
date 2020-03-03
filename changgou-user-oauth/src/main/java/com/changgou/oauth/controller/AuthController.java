@@ -36,34 +36,34 @@ public class AuthController {
     private int cookieMaxAge;
 
     @RequestMapping("/toLogin")
-    public String toLogin(@RequestParam(value = "FROM",required = false,defaultValue = "") String from, Model model){
-        model.addAttribute("from",from);
+    public String toLogin(@RequestParam(value = "FROM", required = false, defaultValue = "") String from, Model model) {
+        model.addAttribute("from", from);
         return "login";
     }
 
 
     @RequestMapping("/login")
     @ResponseBody
-    public Result login(String username, String password, HttpServletResponse response){
+    public Result login(String username, String password, HttpServletResponse response) {
         //校验参数
-        if (StringUtils.isEmpty(username)){
+        if (StringUtils.isEmpty(username)) {
             throw new RuntimeException("请输入用户名");
         }
-        if (StringUtils.isEmpty(password)){
+        if (StringUtils.isEmpty(password)) {
             throw new RuntimeException("请输入密码");
         }
         //申请令牌 authtoken
         AuthToken authToken = authService.login(username, password, clientId, clientSecret);
 
         //将jti的值存入cookie中
-        this.saveJtiToCookie(authToken.getJti(),response);
+        this.saveJtiToCookie(authToken.getJti(), response);
 
         //返回结果
-        return new Result(true, StatusCode.OK,"登录成功",authToken.getJti());
+        return new Result(true, StatusCode.OK, "登录成功", authToken.getJti());
     }
 
     //将令牌的断标识jti存入到cookie中
     private void saveJtiToCookie(String jti, HttpServletResponse response) {
-        CookieUtil.addCookie(response,cookieDomain,"/","uid",jti,cookieMaxAge,false);
+        CookieUtil.addCookie(response, cookieDomain, "/", "uid", jti, cookieMaxAge, false);
     }
 }

@@ -18,7 +18,7 @@ public class UrlFilter implements GlobalFilter, Ordered {
         System.out.println("经过了第二个过滤器");
         ServerHttpRequest request = exchange.getRequest();
         String path = request.getURI().getPath();
-        System.out.println("path:"+path);
+        System.out.println("path:" + path);
         //放行
         return chain.filter(exchange);
     }
@@ -27,4 +27,5 @@ public class UrlFilter implements GlobalFilter, Ordered {
     public int getOrder() {
         return 2;
     }
+
 }

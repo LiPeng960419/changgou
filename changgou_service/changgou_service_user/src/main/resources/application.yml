@@ -5,15 +5,20 @@ spring:
     name: user
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.200.128:3306/changgou_user?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    url: jdbc:mysql://39.97.99.155:3306/changgou_user?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
     username: root
     password: root
+    hikari:
+      minimum-idle: 3
+      maximum-pool-size: 10
+      max-lifetime: 30000
+      connection-test-query: select 1
   main:
     allow-bean-definition-overriding: true #当遇到同样名字的时候，是否允许覆盖注册
   redis:
-    host: 192.168.200.128
+    host: 39.97.99.155
   rabbitmq:
-    host: 192.168.200.128
+    host: 39.97.99.155
 eureka:
   client:
     service-url:

@@ -12,11 +12,11 @@ import tk.mybatis.spring.annotation.MapperScan;
 @MapperScan(basePackages = {"com.changgou.user.dao"})
 public class UserApplication {
     public static void main(String[] args) {
-        SpringApplication.run( UserApplication.class);
+        SpringApplication.run(UserApplication.class);
     }
 
     @Bean
-    public TokenDecode tokenDecode(){
+    public TokenDecode tokenDecode() {
         return new TokenDecode();
     }
 }

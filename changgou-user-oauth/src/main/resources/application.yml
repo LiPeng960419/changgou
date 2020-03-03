@@ -4,7 +4,7 @@ spring:
   application:
     name: user-auth
   redis:
-    host: 192.168.200.128
+    host: 39.97.99.155
     port: 6379
     password:
     jedis:
@@ -14,9 +14,14 @@ spring:
         min-idle: 0
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.200.128:3306/changgou_user?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowMultiQueries=true&serverTimezone=UTC
+    url: jdbc:mysql://39.97.99.155:3306/changgou_user?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowMultiQueries=true&serverTimezone=UTC
     username: root
     password: root
+    hikari:
+      minimum-idle: 3
+      maximum-pool-size: 10
+      max-lifetime: 30000
+      connection-test-query: select 1
   main:
     allow-bean-definition-overriding: true
 eureka:

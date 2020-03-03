@@ -23,7 +23,7 @@ public class IpFilter implements GlobalFilter, Ordered {
         System.out.println("经过了第一个过滤器");
         ServerHttpRequest request = exchange.getRequest();
         InetSocketAddress remoteAddress = request.getRemoteAddress();
-        System.out.println("ip:"+remoteAddress.getHostName());
+        System.out.println("ip:" + remoteAddress.getHostName());
         //放行
         return chain.filter(exchange);
     }
@@ -33,4 +33,5 @@ public class IpFilter implements GlobalFilter, Ordered {
     public int getOrder() {
         return 1;
     }
+
 }
