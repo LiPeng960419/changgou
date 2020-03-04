@@ -34,7 +34,7 @@ done
 
 if [ $error -eq 0 ]; then
 
-echo  "\r\n\033[42;37m init nacos config finished, please start fescar-server. \033[0m"
+echo  "\r\n\033[42;37m init nacos config finished, please start seata-server. \033[0m"
 
 else
 

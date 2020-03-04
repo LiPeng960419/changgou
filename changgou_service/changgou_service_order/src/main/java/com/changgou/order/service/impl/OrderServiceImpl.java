@@ -112,7 +112,7 @@ public class OrderServiceImpl implements OrderService {
         //扣减库存并增加销量
         skuFeign.decrCount(order.getUsername());
 
-        //int i =1/0;
+        //int i = 1 / 0;
         //添加任务数据
         System.out.println("向订单数据库中的任务表去添加任务数据");
         Task task = new Task();

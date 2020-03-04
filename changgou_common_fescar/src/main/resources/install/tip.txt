@@ -1,3 +1,9 @@
 nohup sh seata-server.sh -p 8091 > catalina.out 2>&1 &
 
 seate1.1.0
+
+sh nacos-config.sh localhost nacos-config.txt
+
+可能本机不与seata在同一个服务器无法通信，导入异常
+取消注释FescarAutoConfiguration @Bean
+注释io.seata pom 加入spring-cloud-alibaba-seata pom

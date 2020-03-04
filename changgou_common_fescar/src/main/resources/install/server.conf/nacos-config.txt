@@ -21,7 +21,7 @@ service.vgroup_mapping.business-service-seata-service-group=default
 service.vgroup_mapping.account-service-seata-service-group=default
 service.vgroup_mapping.storage-service-seata-service-group=default
 service.vgroup_mapping.order-service-seata-service-group=default
-service.default.grouplist=127.0.0.1:8091
+service.default.grouplist=39.97.99.155:8091
 service.enableDegrade=false
 service.disable=false
 service.max.commit.retry.timeout=-1
@@ -44,7 +44,7 @@ store.file.session.reload.read_size=100
 store.db.datasource=druid
 store.db.db-type=mysql
 store.db.driverClassName=com.mysql.jdbc.Driver
-store.db.url=jdbc:mysql://127.0.0.1:3306/seata?useUnicode=true
+store.db.url=jdbc:mysql://39.97.99.155/seata?useUnicode=true
 store.db.user=root
 store.db.password=root
 store.db.min-conn=1

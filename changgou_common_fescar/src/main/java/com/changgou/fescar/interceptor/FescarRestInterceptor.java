@@ -22,17 +22,17 @@ public class FescarRestInterceptor implements RequestInterceptor, ClientHttpRequ
     @Override
     public void apply(RequestTemplate requestTemplate) {
         String xid = RootContext.getXID();
-        if(!StringUtils.isEmpty(xid)){
-            requestTemplate.header( FescarAutoConfiguration.FESCAR_XID, xid);
+        if (!StringUtils.isEmpty(xid)) {
+            requestTemplate.header(FescarAutoConfiguration.FESCAR_XID, xid);
         }
     }
 
     @Override
     public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
         String xid = RootContext.getXID();
-        if(!StringUtils.isEmpty(xid)){
+        if (!StringUtils.isEmpty(xid)) {
             HttpHeaders headers = request.getHeaders();
-            headers.put( FescarAutoConfiguration.FESCAR_XID, Collections.singletonList(xid));
+            headers.put(FescarAutoConfiguration.FESCAR_XID, Collections.singletonList(xid));
         }
         return execution.execute(request, body);
     }

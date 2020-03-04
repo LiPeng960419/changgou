@@ -1,6 +1,10 @@
 server:
   port: 9002
 spring:
+  cloud:
+    alibaba:
+      seata:
+        tx-service-group: my_test_tx_group
   application:
     name: order
   datasource:
