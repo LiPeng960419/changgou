@@ -12,24 +12,26 @@ import java.util.Enumeration;
 
 @Component
 public class FeignInterceptor implements RequestInterceptor {
+
     @Override
     public void apply(RequestTemplate requestTemplate) {
         //传递令牌
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-        if (requestAttributes != null){
+        if (requestAttributes != null) {
             HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
-            if (request != null){
+            if (request != null) {
                 Enumeration<String> headerNames = request.getHeaderNames();
-                while (headerNames.hasMoreElements()){
+                while (headerNames.hasMoreElements()) {
                     String headerName = headerNames.nextElement();
-                    if ("authorization".equals(headerName)){
+                    if ("authorization".equals(headerName)) {
                         String headerValue = request.getHeader(headerName); // Bearer jwt
 
                         //传递令牌
-                        requestTemplate.header(headerName,headerValue);
+                        requestTemplate.header(headerName, headerValue);
                     }
                 }
             }
         }
     }
+
 }

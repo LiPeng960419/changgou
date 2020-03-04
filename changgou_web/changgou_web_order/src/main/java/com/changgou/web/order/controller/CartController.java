@@ -14,16 +14,16 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/wcart")
-public class CartController{
+public class CartController {
 
     @Autowired
     private CartFeign cartFeign;
 
     //查询
     @GetMapping("/list")
-    public String list(Model model){
+    public String list(Model model) {
         Map map = cartFeign.list();
-        model.addAttribute("items",map);
+        model.addAttribute("items", map);
         return "cart";
     }
 
@@ -31,9 +31,9 @@ public class CartController{
     //添加
     @GetMapping("/add")
     @ResponseBody
-    public Result<Map> add(String id,Integer num){
-        cartFeign.addCart(id,num);
+    public Result<Map> add(String id, Integer num) {
+        cartFeign.addCart(id, num);
         Map map = cartFeign.list();
-        return new Result<>(true, StatusCode.OK,"添加购物车成功",map);
+        return new Result<>(true, StatusCode.OK, "添加购物车成功", map);
     }
 }
