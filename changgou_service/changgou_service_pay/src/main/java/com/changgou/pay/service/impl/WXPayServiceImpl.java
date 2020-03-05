@@ -1,7 +1,9 @@
 package com.changgou.pay.service.impl;
 
+import com.changgou.pay.config.RabbitMQConfig;
 import com.changgou.pay.service.WXPayService;
 import com.github.wxpay.sdk.WXPay;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,9 @@ public class WXPayServiceImpl implements WXPayService {
 
     @Autowired
     private WXPay wxPay;
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
     @Value("${wxpay.notify_url}")
     private String notify_url;
@@ -40,6 +45,10 @@ public class WXPayServiceImpl implements WXPayService {
 
             //2.基于wxpay完成统一下单接口的调用,并获取返回结果
             Map<String, String> result = wxPay.unifiedOrder(map);
+            //下单成功后发送延迟消息
+            if ("SUCCESS".equals(result.get("result_code"))) {
+                rabbitTemplate.convertAndSend("", RabbitMQConfig.ORDER_CREATE, orderId);
+            }
             return result;
         }catch (Exception e){
             e.printStackTrace();

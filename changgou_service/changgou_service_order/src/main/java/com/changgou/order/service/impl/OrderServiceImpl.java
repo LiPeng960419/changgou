@@ -131,8 +131,8 @@ public class OrderServiceImpl implements OrderService {
         //5.删除购物车数据(redis)
         redisTemplate.delete("cart_" + order.getUsername());
 
-        //发送延迟消息
-        rabbitTemplate.convertAndSend("", "queue.ordercreate", orderId);
+        //发送延迟消息  个人修改，在下单点支付的时候发送延迟消息
+        //rabbitTemplate.convertAndSend("", RabbitMQConfig.ORDER_CREATE, orderId);
         return orderId;
     }
 
@@ -263,6 +263,9 @@ public class OrderServiceImpl implements OrderService {
             System.out.println("完成数据补偿");
         }
 
+        //如果在一段时间内没点支付 wx获取不到订单信息
+        //需要判断订单信息是否存在，所以只有在点击支付后才能发送延迟队列
+        // 下单的时候需要改一下，不在下单的时候发送延迟消息而是在点击支付的时候发送
         //如果订单的支付状态为未支付,则修改mysql中的订单信息,新增订单日志,恢复商品的库存,基于微信关闭订单
         if ("NOTPAY".equals(wxQueryMap.get("trade_state"))) {
             System.out.println("执行关闭");
