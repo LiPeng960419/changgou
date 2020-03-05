@@ -19,8 +19,9 @@ public class SecKillGoodsController {
     private SecKillGoodsService secKillGoodsService;
 
     @RequestMapping("/list")
-    public Result<List<SeckillGoods>> list(@RequestParam("time") String time){
+    public Result<List<SeckillGoods>> list(@RequestParam("time") String time) {
         List<SeckillGoods> seckillGoodsList = secKillGoodsService.list(time);
-        return new Result<>(true, StatusCode.OK,"查询成功",seckillGoodsList);
+        return new Result<>(true, StatusCode.OK, "查询成功", seckillGoodsList);
     }
+
 }

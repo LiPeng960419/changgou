@@ -28,32 +28,33 @@ public class AccessLimitAop {
     private RateLimiter rateLimiter = RateLimiter.create(2.0); //每秒生成两个令牌存入桶中
 
     @Pointcut("@annotation(com.changgou.seckill.web.aspect.AccessLimit)")
-    public void limit(){}
+    public void limit() {
+    }
 
     @Around("limit()")
-    public Object around(ProceedingJoinPoint proceedingJoinPoint){
+    public Object around(ProceedingJoinPoint proceedingJoinPoint) {
 
         boolean flag = rateLimiter.tryAcquire();
         Object obj = null; //返回值
 
-        if (flag){
+        if (flag) {
             //允许访问
             try {
                 obj = proceedingJoinPoint.proceed();
             } catch (Throwable throwable) {
                 throwable.printStackTrace();
             }
-        }else{
+        } else {
             //不允许访问,拒绝
-            String errorMessage = JSON.toJSONString(new Result<>(false, StatusCode.ACCESSERROR,"fail"));
+            String errorMessage = JSON.toJSONString(new Result<>(false, StatusCode.ACCESSERROR, "fail"));
             //将信息返回到客户端上
-            this.outMessage(response,errorMessage);
+            this.outMessage(response, errorMessage);
         }
 
         return obj;
     }
 
-    private void outMessage(HttpServletResponse response,String errorMessage){
+    private void outMessage(HttpServletResponse response, String errorMessage) {
 
         ServletOutputStream outputStream = null;
         try {
@@ -62,7 +63,7 @@ public class AccessLimitAop {
             outputStream.write(errorMessage.getBytes("utf-8"));
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
                 outputStream.close();
             } catch (IOException e) {

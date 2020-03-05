@@ -7,15 +7,15 @@ spring:
     name: seckill
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.200.128:3306/changgou_seckill?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowMultiQueries=true&serverTimezone=GMT%2b8
+    url: jdbc:mysql://127.0.0.1:3306/changgou_seckill?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowMultiQueries=true&serverTimezone=GMT%2b8
     username: root
     password: root
   main:
     allow-bean-definition-overriding: true #当遇到同样名字的时候，是否允许覆盖注册
   redis:
-    host: 192.168.200.128
+    host: 39.97.99.155
   rabbitmq:
-    host: 192.168.200.128
+    host: 39.97.99.155
     publisher-confirms: true  #开启confirm数据保护机制
 eureka:
   client:
@@ -44,3 +44,9 @@ hystrix:
           thread:
             # 熔断器超时时间，默认：1000/毫秒
             timeoutInMilliseconds: 20000
+logging:
+  level:
+    com:
+      changgou:
+        seckill:
+          dao: debug

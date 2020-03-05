@@ -13,4 +13,5 @@ public interface SecKillGoodsFeign {
 
     @RequestMapping("/seckillgoods/list")
     public Result<List<SeckillGoods>> list(@RequestParam("time") String time);
+
 }

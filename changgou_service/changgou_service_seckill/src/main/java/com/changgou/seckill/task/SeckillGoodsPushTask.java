@@ -23,12 +23,12 @@ public class SeckillGoodsPushTask {
     @Autowired
     private RedisTemplate redisTemplate;
 
-    public static final String SECKILL_GOODS_KEY="seckill_goods_";
+    public static final String SECKILL_GOODS_KEY = "seckill_goods_";
 
-    public static final String SECKILL_GOODS_STOCK_COUNT_KEY="seckill_goods_stock_count_";
+    public static final String SECKILL_GOODS_STOCK_COUNT_KEY = "seckill_goods_stock_count_";
 
     @Scheduled(cron = "0/30 * * * * ?")
-    public void  loadSecKillGoodsToRedis(){
+    public void loadSecKillGoodsToRedis() {
         /**
          * 1.查询所有符合条件的秒杀商品
          * 	1) 获取时间段集合并循环遍历出每一个时间段
@@ -52,27 +52,28 @@ public class SeckillGoodsPushTask {
             Example example = new Example(SeckillGoods.class);
             Example.Criteria criteria = example.createCriteria();
 
-            criteria.andEqualTo("status","1");
-            criteria.andGreaterThan("stockCount",0);
-            criteria.andGreaterThanOrEqualTo("startTime",simpleDateFormat.format(dateMenu));
-            criteria.andLessThan("endTime",simpleDateFormat.format(DateUtil.addDateHour(dateMenu,2)));
+            criteria.andEqualTo("status", "1");
+            criteria.andGreaterThan("stockCount", 0);
+            criteria.andGreaterThanOrEqualTo("startTime", simpleDateFormat.format(dateMenu));
+            criteria.andLessThan("endTime", simpleDateFormat.format(DateUtil.addDateHour(dateMenu, 2)));
 
             Set keys = redisTemplate.boundHashOps(SECKILL_GOODS_KEY + redisExtName).keys();//key field value
 
-            if (keys != null && keys.size()>0){
-                criteria.andNotIn("id",keys);
+            if (keys != null && keys.size() > 0) {
+                criteria.andNotIn("id", keys);
             }
 
             List<SeckillGoods> seckillGoodsList = seckillGoodsMapper.selectByExample(example);
 
             //添加到缓存中
             for (SeckillGoods seckillGoods : seckillGoodsList) {
-                redisTemplate.opsForHash().put(SECKILL_GOODS_KEY + redisExtName,seckillGoods.getId(),seckillGoods);
+                redisTemplate.opsForHash().put(SECKILL_GOODS_KEY + redisExtName, seckillGoods.getId(), seckillGoods);
 
                 //加载秒杀商品的库存
-                redisTemplate.opsForValue().set(SECKILL_GOODS_STOCK_COUNT_KEY+seckillGoods.getId(),seckillGoods.getStockCount());
+                redisTemplate.opsForValue().set(SECKILL_GOODS_STOCK_COUNT_KEY + seckillGoods.getId(), seckillGoods.getStockCount());
             }
         }
 
     }
+
 }

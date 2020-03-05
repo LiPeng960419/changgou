@@ -20,13 +20,13 @@ import tk.mybatis.spring.annotation.MapperScan;
 public class SecKillApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SecKillApplication.class,args);
+        SpringApplication.run(SecKillApplication.class, args);
     }
 
     //idwork
     @Bean
-    public IdWorker idWorker(){
-        return new IdWorker(1,1);
+    public IdWorker idWorker() {
+        return new IdWorker(1, 1);
     }
 
     //设置redistemplate的序列化
@@ -47,7 +47,8 @@ public class SecKillApplication {
     }
 
     @Bean
-    public TokenDecode tokenDecode(){
+    public TokenDecode tokenDecode() {
         return new TokenDecode();
     }
+
 }

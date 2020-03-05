@@ -23,12 +23,12 @@ public class SecKillOrderServiceImpl implements SecKillOrderService {
         //同步mysql中的数据
         //1.扣减秒杀商品的库存
         int result = seckillGoodsMapper.updateStockCount(seckillOrder.getSeckillId());
-        if (result <= 0){
+        if (result <= 0) {
             return 0;
         }
         //2.新增秒杀订单
         result = seckillOrderMapper.insertSelective(seckillOrder);
-        if (result <= 0){
+        if (result <= 0) {
             return 0;
         }
         return 1;

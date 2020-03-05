@@ -20,13 +20,13 @@ public class TokenDecode {
     //公钥
     private static final String PUBLIC_KEY = "public.key";
 
-    private static String publickey="";
+    private static String publickey = "";
 
     /***
      * 获取用户信息
      * @return
      */
-    public Map<String,String> getUserInfo(){
+    public Map<String, String> getUserInfo() {
         //获取授权信息
         OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) SecurityContextHolder.getContext().getAuthentication().getDetails();
         //令牌解码
@@ -36,22 +36,23 @@ public class TokenDecode {
     /***
      * 读取令牌数据
      */
-    public Map<String,String> dcodeToken(String token){
+    public Map<String, String> dcodeToken(String token) {
         //校验Jwt
         Jwt jwt = JwtHelper.decodeAndVerify(token, new RsaVerifier(getPubKey()));
 
         //获取Jwt原始内容
         String claims = jwt.getClaims();
-        return JSON.parseObject(claims,Map.class);
+        return JSON.parseObject(claims, Map.class);
     }
 
 
     /**
      * 获取非对称加密公钥 Key
+     *
      * @return 公钥 Key
      */
     public String getPubKey() {
-        if(!StringUtils.isEmpty(publickey)){
+        if (!StringUtils.isEmpty(publickey)) {
             return publickey;
         }
         Resource resource = new ClassPathResource(PUBLIC_KEY);
@@ -64,4 +65,5 @@ public class TokenDecode {
             return null;
         }
     }
+
 }

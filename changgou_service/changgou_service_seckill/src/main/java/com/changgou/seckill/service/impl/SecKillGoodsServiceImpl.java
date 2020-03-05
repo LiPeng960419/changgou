@@ -14,9 +14,9 @@ public class SecKillGoodsServiceImpl implements SecKillGoodsService {
     @Autowired
     private RedisTemplate redisTemplate;
 
-    public static final String SECKILL_GOODS_KEY="seckill_goods_";
+    public static final String SECKILL_GOODS_KEY = "seckill_goods_";
 
-    public static final String SECKILL_GOODS_STOCK_COUNT_KEY="seckill_goods_stock_count_";
+    public static final String SECKILL_GOODS_STOCK_COUNT_KEY = "seckill_goods_stock_count_";
 
     @Override
     public List<SeckillGoods> list(String time) {
@@ -24,9 +24,10 @@ public class SecKillGoodsServiceImpl implements SecKillGoodsService {
 
         //更新库存数据的来源
         for (SeckillGoods seckillGoods : list) {
-           String value = (String) redisTemplate.opsForValue().get(SECKILL_GOODS_STOCK_COUNT_KEY+seckillGoods.getId());
-           seckillGoods.setStockCount(Integer.parseInt(value));
+            String value = (String) redisTemplate.opsForValue().get(SECKILL_GOODS_STOCK_COUNT_KEY + seckillGoods.getId());
+            seckillGoods.setStockCount(Integer.parseInt(value));
         }
         return list;
     }
+
 }

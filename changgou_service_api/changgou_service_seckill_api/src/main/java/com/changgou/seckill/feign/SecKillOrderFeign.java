@@ -10,4 +10,5 @@ public interface SecKillOrderFeign {
 
     @RequestMapping("/seckillorder/add")
     public Result add(@RequestParam("time") String time, @RequestParam("id") Long id);
+
 }

@@ -23,9 +23,9 @@ public class SecKillOrderServiceImpl implements SecKillOrderService {
     @Autowired
     private RedisTemplate redisTemplate;
 
-    public static final String SECKILL_GOODS_KEY="seckill_goods_";
+    public static final String SECKILL_GOODS_KEY = "seckill_goods_";
 
-    public static final String SECKILL_GOODS_STOCK_COUNT_KEY="seckill_goods_stock_count_";
+    public static final String SECKILL_GOODS_STOCK_COUNT_KEY = "seckill_goods_stock_count_";
 
     @Autowired
     private IdWorker idWorker;
@@ -46,36 +46,35 @@ public class SecKillOrderServiceImpl implements SecKillOrderService {
          */
         //防止用户恶意刷单
         String result = this.preventRepeatCommit(username, id);
-        if ("fail".equals(result)){
+        if ("fail".equals(result)) {
             return false;
         }
 
         //防止相同商品重复购买
         SeckillOrder order = seckillOrderMapper.getOrderInfoByUserNameAndGoodsId(username, id);
-        if (order != null){
+        if (order != null) {
             return false;
         }
 
-
         //获取商品信息
-        SeckillGoods seckillGoods = (SeckillGoods) redisTemplate.boundHashOps(SECKILL_GOODS_KEY+time).get(id);
+        SeckillGoods seckillGoods = (SeckillGoods) redisTemplate.boundHashOps(SECKILL_GOODS_KEY + time).get(id);
         //获取库存信息
-        String redisStock = (String) redisTemplate.opsForValue().get(SECKILL_GOODS_STOCK_COUNT_KEY+id);
-        if (StringUtils.isEmpty(redisStock)){
+        String redisStock = (String) redisTemplate.opsForValue().get(SECKILL_GOODS_STOCK_COUNT_KEY + id);
+        if (StringUtils.isEmpty(redisStock)) {
             return false;
         }
         int stock = Integer.parseInt(redisStock);
-        if (seckillGoods == null || stock<=0){
+        if (seckillGoods == null || stock <= 0) {
             return false;
         }
 
         //执行redis的预扣减库存,并获取到扣减之后的库存值
         //decrement:减 increment:加     ->    Lua脚本语言
         Long decrement = redisTemplate.opsForValue().decrement(SECKILL_GOODS_STOCK_COUNT_KEY + id);
-        if (decrement<=0){
+        if (decrement <= 0) {
             //扣减完库存之后,当前商品已经没有库存了.
             //删除redis中的商品信息与库存信息
-            redisTemplate.boundHashOps(SECKILL_GOODS_KEY+time).delete(id);
+            redisTemplate.boundHashOps(SECKILL_GOODS_KEY + time).delete(id);
             redisTemplate.delete(SECKILL_GOODS_STOCK_COUNT_KEY + id);
         }
 
@@ -96,18 +95,18 @@ public class SecKillOrderServiceImpl implements SecKillOrderService {
         return true;
     }
 
-    private String preventRepeatCommit(String username,Long id){
-        String redis_key = "seckill_user_"+username+"_id_"+id;
+    private String preventRepeatCommit(String username, Long id) {
+        String redis_key = "seckill_user_" + username + "_id_" + id;
 
         long count = redisTemplate.opsForValue().increment(redis_key, 1);
-        if (count == 1){
+        if (count == 1) {
             //代表当前用户是第一次访问.
             //对当前的key设置一个五分钟的有效期
-            redisTemplate.expire(redis_key,5, TimeUnit.MINUTES);
+            redisTemplate.expire(redis_key, 5, TimeUnit.MINUTES);
             return "success";
         }
 
-        if (count>1){
+        if (count > 1) {
             return "fail";
         }
 

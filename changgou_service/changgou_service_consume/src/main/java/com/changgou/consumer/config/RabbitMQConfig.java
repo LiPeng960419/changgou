@@ -7,10 +7,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
-    public static final String SECKILL_ORDER_QUEUE="seckill_order";
+    public static final String SECKILL_ORDER_QUEUE = "seckill_order";
 
     @Bean
-    public Queue queue(){
-        return new Queue(SECKILL_ORDER_QUEUE,true);
+    public Queue queue() {
+        return new Queue(SECKILL_ORDER_QUEUE, true);
     }
+
 }

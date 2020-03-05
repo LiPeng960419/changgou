@@ -20,7 +20,7 @@ public class SecKillOrderController {
     private SecKillOrderService secKillOrderService;
 
     @RequestMapping("/add")
-    public Result add(@RequestParam("time") String time, @RequestParam("id") Long id){
+    public Result add(@RequestParam("time") String time, @RequestParam("id") Long id) {
         //1.动态获取到当前的登录人
         String username = tokenDecode.getUserInfo().get("username");
 
@@ -28,12 +28,12 @@ public class SecKillOrderController {
         boolean result = secKillOrderService.add(id, time, username);
 
         //3.返回结果
-        if (result){
+        if (result) {
             //下单成功
-            return new Result(true, StatusCode.OK,"下单成功");
-        }else{
+            return new Result(true, StatusCode.OK, "下单成功");
+        } else {
             //下单失败
-            return new Result(false,StatusCode.ERROR,"下单失败");
+            return new Result(false, StatusCode.ERROR, "下单失败");
         }
     }
 }
