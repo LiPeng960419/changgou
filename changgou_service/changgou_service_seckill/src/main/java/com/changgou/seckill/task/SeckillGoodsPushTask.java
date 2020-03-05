@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 @Component
 public class SeckillGoodsPushTask {
@@ -67,10 +68,13 @@ public class SeckillGoodsPushTask {
 
             //添加到缓存中
             for (SeckillGoods seckillGoods : seckillGoodsList) {
-                redisTemplate.opsForHash().put(SECKILL_GOODS_KEY + redisExtName, seckillGoods.getId(), seckillGoods);
-
+                redisTemplate.opsForHash().put(SECKILL_GOODS_KEY + redisExtName,
+                        seckillGoods.getId(), seckillGoods);
+                redisTemplate.boundHashOps(SECKILL_GOODS_KEY + redisExtName).
+                        expire(2, TimeUnit.HOURS);
                 //加载秒杀商品的库存
-                redisTemplate.opsForValue().set(SECKILL_GOODS_STOCK_COUNT_KEY + seckillGoods.getId(), seckillGoods.getStockCount());
+                redisTemplate.opsForValue().set(SECKILL_GOODS_STOCK_COUNT_KEY + seckillGoods.getId(),
+                        seckillGoods.getStockCount(), 2, TimeUnit.HOURS);
             }
         }
 
