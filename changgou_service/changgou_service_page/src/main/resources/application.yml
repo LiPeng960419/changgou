@@ -4,7 +4,7 @@ spring:
   application:
     name: page
   rabbitmq:
-    host: 39.97.99.155
+    host: 127.0.0.1
   main:
     allow-bean-definition-overriding: true #当遇到同样名字的时候，是否允许覆盖注册
 eureka:

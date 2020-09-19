@@ -222,7 +222,7 @@ let qrcode = new QRCode(document.getElementById("qrcode"), {
 qrcode.makeCode([[${code_url}]]);
 
 
-let client = Stomp.client('ws://39.97.99.155:15674/ws');
+let client = Stomp.client('ws://127.0.0.1:15674/ws');
 let on_connect = function(x) {
     id = client.subscribe("/exchange/paynotify", function(d) {
         alert(d.body);

@@ -4,9 +4,9 @@ spring:
   application:
     name: search
   rabbitmq:
-    host: 39.97.99.155
+    host: 127.0.0.1
   redis:
-    host: 39.97.99.155
+    host: 127.0.0.1
   jpa:
     properties:
       hibernate:
@@ -17,7 +17,7 @@ spring:
   data:
     elasticsearch:
       cluster-name: elk-es
-      cluster-nodes: 39.97.99.155:9300
+      cluster-nodes: 127.0.0.1:9300
   thymeleaf:
     cache: false
 eureka:

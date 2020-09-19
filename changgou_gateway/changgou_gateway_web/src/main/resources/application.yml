@@ -63,7 +63,7 @@ spring:
           filters:
             - StripPrefix=1
   redis:
-    host: 39.97.99.155
+    host: 127.0.0.1
 server:
   port: 8001
 eureka:
