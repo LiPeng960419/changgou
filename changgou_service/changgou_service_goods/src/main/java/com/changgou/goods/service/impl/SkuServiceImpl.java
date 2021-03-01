@@ -6,6 +6,7 @@ import com.changgou.goods.pojo.Sku;
 import com.changgou.order.pojo.OrderItem;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -101,10 +102,11 @@ public class SkuServiceImpl implements SkuService {
      * @return 分页结果
      */
     @Override
-    public Page<Sku> findPage(Map<String,Object> searchMap, int page, int size){
-        PageHelper.startPage(page,size);
+    public PageInfo<Sku> findPage(Map<String,Object> searchMap, int page, int size){
         Example example = createExample(searchMap);
-        return (Page<Sku>)skuMapper.selectByExample(example);
+        PageHelper.startPage(page,size);
+        List<Sku> skus = skuMapper.selectByExample(example);
+        return new PageInfo<Sku>(skus);
     }
 
     @Autowired

@@ -1,10 +1,12 @@
 package com.changgou.goods.controller;
+
 import com.changgou.entity.PageResult;
 import com.changgou.entity.Result;
 import com.changgou.entity.StatusCode;
-import com.changgou.goods.service.SkuService;
 import com.changgou.goods.pojo.Sku;
+import com.changgou.goods.service.SkuService;
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -100,8 +102,8 @@ public class SkuController {
      */
     @GetMapping(value = "/search/{page}/{size}" )
     public Result findPage(@RequestParam Map searchMap, @PathVariable  int page, @PathVariable  int size){
-        Page<Sku> pageList = skuService.findPage(searchMap, page, size);
-        PageResult pageResult=new PageResult(pageList.getTotal(),pageList.getResult());
+        PageInfo<Sku> pageList = skuService.findPage(searchMap, page, size);
+        PageResult pageResult=new PageResult(pageList.getTotal(),pageList.getList());
         return new Result(true,StatusCode.OK,"查询成功",pageResult);
     }
 
@@ -129,4 +131,11 @@ public class SkuController {
         skuService.resumeStockNum(skuId, num);
         return new Result(true,StatusCode.OK,"回滚库存成功");
     }
+
+    @GetMapping(value = "/searchPage/{page}/{size}")
+    public Result<PageInfo> searchPage(@RequestParam Map searchMap, @PathVariable int page, @PathVariable int size) {
+        PageInfo<Sku> pageList = skuService.findPage(searchMap, page, size);
+        return new Result(true, StatusCode.OK, "查询成功", pageList);
+    }
+
 }
