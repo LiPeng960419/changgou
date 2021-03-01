@@ -45,24 +45,31 @@ public class ESManagerServiceImpl implements ESManagerService {
         int page = 1;
         int pageSize = 1000;
         HashMap hashMap = new HashMap();
-        Result<PageInfo<Sku>> pageResult = skuFeign.searchPage(hashMap, page, pageSize);
-        if (pageResult != null && pageResult.getData() != null && !CollectionUtils.isEmpty(pageResult.getData().getList())) {
-            PageInfo<Sku> data = pageResult.getData();
-            int pages = data.getPages();
-            for (; page <= pages; page++) {
-                Result<PageInfo<Sku>> result = skuFeign.searchPage(hashMap, page, pageSize);
-                //将集合转换为json
-                String jsonSkuList = JSON.toJSONString(result.getData().getList());
-                List<SkuInfo> skuInfoList = JSON.parseArray(jsonSkuList, SkuInfo.class);
 
-                for (SkuInfo skuInfo : skuInfoList) {
-                    //将规格信息进行转换
-                    Map specMap = JSON.parseObject(skuInfo.getSpec(), Map.class);
-                    skuInfo.setSpecMap(specMap);
+//        Result<PageInfo<Sku>> pageResult = skuFeign.searchPage(hashMap, page, pageSize);
+//        if (pageResult != null && pageResult.getData() != null && !CollectionUtils.isEmpty(pageResult.getData().getList())) {
+//            PageInfo<Sku> data = pageResult.getData();
+//            int pages = data.getPages();
+//            for (; page <= pages; page++) {
+//                Result<PageInfo<Sku>> result = skuFeign.searchPage(hashMap, page, pageSize);
+//                //将集合转换为json
+//                save(result.getData().getList());
+//            }
+//        }
+
+        Result<PageInfo<Sku>> result = skuFeign.searchPage(hashMap, page, pageSize);
+        if (result != null && result.getData() != null && !CollectionUtils.isEmpty(result.getData().getList())) {
+            PageInfo<Sku> data = result.getData();
+            if (!CollectionUtils.isEmpty(data.getList())) {
+                save(data.getList());
+            }
+            if (data.getPages() > 1) {
+                page = 2;
+                for (; page <= data.getPages(); page++) {
+                    result = skuFeign.searchPage(hashMap, page, pageSize);
+                    //将集合转换为json
+                    save(result.getData().getList());
                 }
-
-                //添加索引库
-                esManagerMapper.saveAll(skuInfoList);
             }
         }
     }
@@ -71,11 +78,17 @@ public class ESManagerServiceImpl implements ESManagerService {
     @Override
     public void importDataBySpuId(String spuId) {
         List<Sku> skuList = skuFeign.findSkuListBySpuId(spuId);
-        if (skuList == null || skuList.size()<=0){
+        if (skuList == null || skuList.size() <= 0) {
             throw new RuntimeException("当前没有数据被查询到,无法导入索引库");
         }
         //将集合转换为json
-        String jsonSkuList = JSON.toJSONString(skuList);
+        save(skuList);
+    }
+
+
+    private void save(List<Sku> list) {
+        //将集合转换为json
+        String jsonSkuList = JSON.toJSONString(list);
         List<SkuInfo> skuInfoList = JSON.parseArray(jsonSkuList, SkuInfo.class);
 
         for (SkuInfo skuInfo : skuInfoList) {
