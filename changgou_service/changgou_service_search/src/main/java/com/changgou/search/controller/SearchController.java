@@ -44,7 +44,7 @@ public class SearchController {
         model.addAttribute("page", page);
 
         //拼装url
-        StringBuilder url = new StringBuilder("/search/list");
+        StringBuilder url = new StringBuilder("/api/search/list");
         if (searchMap != null && searchMap.size() > 0) {
             //是由查询条件
             url.append("?");
