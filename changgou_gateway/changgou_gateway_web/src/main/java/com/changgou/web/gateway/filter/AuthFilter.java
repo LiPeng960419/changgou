@@ -1,6 +1,7 @@
 package com.changgou.web.gateway.filter;
 
 import com.changgou.web.gateway.service.AuthService;
+import com.changgou.web.gateway.utils.WebUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -39,11 +40,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
             /*response.setStatusCode(HttpStatus.UNAUTHORIZED);
             return response.setComplete();*/
             //跳转登录页面
-            String query = "";
-            if (StringUtils.isNotEmpty(request.getURI().getQuery())) {
-                query = "?" + request.getURI().getQuery();
-            }
-            return this.toLoginPage(LOGIN_URL + "?FROM=" + request.getURI().getPath() + query, exchange);
+            return this.toLoginPage(LOGIN_URL + "?FROM=" + request.getURI().getPath() + "?" + WebUtils.urlEnCode(request.getURI().getQuery(), "UTF-8"), exchange);
         }
 
         //3.从redis中获取jwt的值,如果该值不存在,拒绝本次访问
