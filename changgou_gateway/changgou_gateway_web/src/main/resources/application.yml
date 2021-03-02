@@ -34,6 +34,13 @@ spring:
             - Path=/api/oauth/**
           filters:
             - StripPrefix=1
+          #搜索微服务
+        - id: changgou_search
+          uri: lb://search
+          predicates:
+            - Path=/api/search/**,/api/manager/**
+          filters:
+            - StripPrefix=1
         #订单微服务
         - id: changgou_order_route
           uri: lb://order

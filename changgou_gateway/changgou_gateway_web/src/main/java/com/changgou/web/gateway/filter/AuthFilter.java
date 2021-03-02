@@ -24,7 +24,6 @@ public class AuthFilter implements GlobalFilter, Ordered {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
-        ServerHttpResponse response = exchange.getResponse();
 
         //1.判断当前请求路径是否为登录请求,如果是,则直接放行
         String path = request.getURI().getPath();
@@ -40,7 +39,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
             /*response.setStatusCode(HttpStatus.UNAUTHORIZED);
             return response.setComplete();*/
             //跳转登录页面
-            return this.toLoginPage(LOGIN_URL + "?FROM=" + request.getURI().getPath(), exchange);
+            return this.toLoginPage(LOGIN_URL + "?FROM=" + request.getURI().getPath() + "?" + request.getURI().getQuery(), exchange);
         }
 
         //3.从redis中获取jwt的值,如果该值不存在,拒绝本次访问
