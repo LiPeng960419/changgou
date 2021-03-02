@@ -39,7 +39,11 @@ public class AuthFilter implements GlobalFilter, Ordered {
             /*response.setStatusCode(HttpStatus.UNAUTHORIZED);
             return response.setComplete();*/
             //跳转登录页面
-            return this.toLoginPage(LOGIN_URL + "?FROM=" + request.getURI().getPath() + "?" + request.getURI().getQuery(), exchange);
+            String query = "";
+            if (StringUtils.isNotEmpty(request.getURI().getQuery())) {
+                query = "?" + request.getURI().getQuery();
+            }
+            return this.toLoginPage(LOGIN_URL + "?FROM=" + request.getURI().getPath() + query, exchange);
         }
 
         //3.从redis中获取jwt的值,如果该值不存在,拒绝本次访问

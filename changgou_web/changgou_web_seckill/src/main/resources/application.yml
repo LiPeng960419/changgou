@@ -19,7 +19,7 @@ spring:
   main:
     allow-bean-definition-overriding: true
   redis:
-    host: 127.0.0.1
+    host: 192.168.7.1
 #hystrix 配置
 hystrix:
   command:

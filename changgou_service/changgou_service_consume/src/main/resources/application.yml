@@ -13,9 +13,9 @@ spring:
   main:
     allow-bean-definition-overriding: true #当遇到同样名字的时候，是否允许覆盖注册
   redis:
-    host: 127.0.0.1
+    host: 192.168.7.1
   rabbitmq:
-    host: 127.0.0.1
+    host: 192.168.7.1
     listener:
       simple:
         acknowledge-mode: manual #开启了消费者手动应答模式

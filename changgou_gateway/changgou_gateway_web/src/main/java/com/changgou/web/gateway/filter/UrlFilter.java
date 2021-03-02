@@ -3,7 +3,7 @@ package com.changgou.web.gateway.filter;
 public class UrlFilter {
 
     //所有需要传递令牌的地址
-    public static final String filterPath = "/api/worder/**,/api/wseckillorder,/api/seckill,/api/wxpay,/api/wxpay/**,/api/user/**,/api/address/**,/api/wcart/**,/api/cart/**,/api/categoryReport/**,/api/orderConfig/**,/api/order/**,/api/orderItem/**,/api/orderLog/**,/api/preferential/**,/api/returnCause/**,/api/returnOrder/**,/api/returnOrderItem/**,/api/search/**,/api/manager/**";
+    public static final String filterPath = "/api/worder/**,/api/wseckillorder,/api/seckill,/api/wxpay,/api/wxpay/**,/api/user/**,/api/address/**,/api/wcart/**,/api/cart/**,/api/categoryReport/**,/api/orderConfig/**,/api/order/**,/api/orderItem/**,/api/orderLog/**,/api/preferential/**,/api/returnCause/**,/api/returnOrder/**,/api/returnOrderItem/**,/api/search/**,/api/manager/**,/api/wseckillgoods/**,/api/wseckillorder/**";
 
     public static boolean hasAuthorize(String url) {
 
