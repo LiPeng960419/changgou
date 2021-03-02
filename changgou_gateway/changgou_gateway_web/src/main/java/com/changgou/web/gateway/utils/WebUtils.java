@@ -1,7 +1,6 @@
 package com.changgou.web.gateway.utils;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -14,9 +13,6 @@ import java.net.URLEncoder;
 public class WebUtils {
 
     public static String urlEnCode(String url, String charset) {
-        if (StringUtils.isEmpty(url)) {
-            return "";
-        }
         try {
             return URLEncoder.encode(url, charset);
         } catch (UnsupportedEncodingException e) {
