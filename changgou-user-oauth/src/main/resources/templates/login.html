@@ -96,12 +96,12 @@
 							<img src="/img/wx_cz.jpg" />
 						</div>
 						<div id="profile" class="tab-pane active">
-							<form class="sui-form">
+							<form class="sui-form" action="/api/oauth/login">
 								<div class="input-prepend"><span class="add-on loginname"></span>
-									<input id="inputName" type="text" v-model="username"  placeholder="邮箱/用户名/手机号" class="span2 input-xfat">
+									<input id="inputName" type="text" name="username" v-model="username"  placeholder="邮箱/用户名/手机号" class="span2 input-xfat">
 								</div>
 								<div class="input-prepend"><span class="add-on loginpwd"></span>
-									<input id="inputPassword" type="password" v-model="password"  placeholder="请输入密码" class="span2 input-xfat">
+									<input id="inputPassword" type="password" name="password" v-model="password"  placeholder="请输入密码" class="span2 input-xfat">
 								</div>
 								<div class="setting">
 									<label class="checkbox inline">
@@ -112,7 +112,8 @@
 								</div>
 								<div class="logined">
 									<!--<a class="sui-btn btn-block btn-xlarge btn-danger" href="home.html" target="_blank">登&nbsp;&nbsp;录</a>-->
-									<button class="sui-btn btn-block btn-xlarge btn-danger" type="button" @click="login()">登&nbsp;&nbsp;录</button>
+									<!--<button class="sui-btn btn-block btn-xlarge btn-danger" type="button" @click="login()">登&nbsp;&nbsp;录</button>-->
+									<button class="sui-btn btn-block btn-xlarge btn-danger" type="submit">登  录</button>
 									{{msg}}
 								</div>
 							</form>
